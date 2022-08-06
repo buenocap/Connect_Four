@@ -9,15 +9,24 @@ class Tic_Tac_Toe:
     def create_board():
         game_board = np.zeros((6,7))
         return game_board
-    def is_game_over(self):
-        if self.game_status == False:
-            return False
-        else:
-            return True
+    def place_chip(self,pos_y,player):
+        full_column = "Column is full please make another selection!\n"
+        for x in reversed(range(0,6)):
+            if self.board[x][pos_y] == 0:
+                self.board[x][pos_y] = player
+                return
+            else:
+                pass
+        return full_column
+    def checkboard(self):
+        pass
 
     # Game Variables
     board = create_board()
 
 # Create Board
 game = Tic_Tac_Toe()
-print(game.board)
+while game.game_status != True:
+    selection = int(input("Enter a row:\n"))
+    game.place_chip(selection,1)
+    print(game.board)
