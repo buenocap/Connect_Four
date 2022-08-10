@@ -1,3 +1,4 @@
+from operator import and_
 import string
 import numpy as np
 import Player
@@ -52,9 +53,32 @@ class Tic_Tac_Toe:
                 counter = 0
                 pos_y -= y
                 break
-
         # Check up
+        for x in range(0,6):
+            if self.board[pos_x][pos_y] == player and pos_x >= 0:
+                pos_x -= 1
+                counter +=1
+            elif counter == 4:
+                print(win_msg)
+                self.game_status = True
+                return
+            else:
+                counter = 0
+                pos_x += x
+                break
         # Check down
+        for x in range(0,6):
+            if pos_x < 6 and self.board[pos_x][pos_y] == player:
+                pos_x += 1
+                counter += 1
+            elif counter == 4:
+                print(win_msg)
+                self.game_status = True
+                return
+            else:
+                counter = 0
+                pos_x -= x
+                break
         # Check diagonal right
         # Check diagonal left
         return
