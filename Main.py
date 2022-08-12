@@ -1,6 +1,6 @@
-from operator import and_
-import string
+import os
 import numpy as np
+import os
 import Player
 import COM
 # Game Board Class Initialization
@@ -41,7 +41,7 @@ class Tic_Tac_Toe:
                 pos_y += y
                 break
         # Check right
-        for y in range(0,6):
+        for y in range(0,7):
             if self.board[pos_x][pos_y] == player and pos_y <= 6:
                 pos_y += 1
                 counter += 1
@@ -79,8 +79,40 @@ class Tic_Tac_Toe:
                 counter = 0
                 pos_x -= x
                 break
-        # Check diagonal right
-        # Check diagonal left
+        # Check upper diagonal (right)
+        temp1 = pos_x
+        temp2 = pos_y
+        while True:
+            if pos_x >= 0 and pos_y < 7 and self.board[pos_x][pos_y] == player:
+                counter += 1
+                pos_x -= 1
+                pos_y += 1
+            elif counter == 4:
+                print(win_msg)
+                self.game_status = True
+                return
+            else:
+                counter = 0
+                pos_x = temp1
+                pos_y = temp2
+                break
+        #Check lower diagonal (right)
+        while True:
+            if pos_x < 6 and pos_y >=0 and self.board[pos_x][pos_y] == player:
+                counter += 1
+                pos_x += 1
+                pos_y -= 1
+            elif counter == 4:
+                print(win_msg)
+                self.game_status = True
+                return
+            else:
+                counter = 0
+                pos_x = temp1
+                pos_y = temp2
+                break
+
+        # Check diagonal (left)
         return
     
     def player_turn(self,player):
@@ -118,9 +150,24 @@ else:
     player = Player.Player(2)
     computer = COM.Computer(1)
 
-#Start Game - Initial Board
-print(game.board)
 #Game loop
-while game.game_status != True:
-    pos_x,pos_y,player_token = game.player_turn(player.token)
-    game.checkboard(pos_x,pos_y,player_token)
+answer = "y"
+while answer == "y":
+    #Start Game - Initial Board
+    print(game.board)
+    while game.game_status != True:
+        pos_x,pos_y,player_token = game.player_turn(player.token)
+        game.checkboard(pos_x,pos_y,player_token)
+    answer = input("Would you like to play again?\n")
+    if answer == "y":
+        # Reset board and status of game
+        game.board.fill(0)
+        game.game_status = False
+        os.system('clear')
+        print("\n")
+        continue
+    else:
+        print("Thank you for playing!")
+        exit()
+    
+    
