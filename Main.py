@@ -29,7 +29,7 @@ class Tic_Tac_Toe:
         win_msg = "Player {player} has won the game!\n".format(player = player)
         # Check left
         for y in range(0,7):
-            if self.board[pos_x][pos_y] == player and pos_y >= 0:
+            if pos_y >= 0 and self.board[pos_x][pos_y] == player:
                 pos_y -= 1
                 counter += 1
             elif counter == 4:
@@ -42,7 +42,7 @@ class Tic_Tac_Toe:
                 break
         # Check right
         for y in range(0,7):
-            if self.board[pos_x][pos_y] == player and pos_y <= 6:
+            if pos_y <= 6 and self.board[pos_x][pos_y] == player:
                 pos_y += 1
                 counter += 1
             elif counter == 4:
@@ -55,7 +55,7 @@ class Tic_Tac_Toe:
                 break
         # Check up
         for x in range(0,6):
-            if self.board[pos_x][pos_y] == player and pos_x >= 0:
+            if pos_x >= 0 and self.board[pos_x][pos_y] == player:
                 pos_x -= 1
                 counter +=1
             elif counter == 4:
@@ -112,7 +112,42 @@ class Tic_Tac_Toe:
                 pos_y = temp2
                 break
 
-        # Check diagonal (left)
+        # Check upper diagonal (left)
+        while True:
+            if pos_x >= 0 and pos_y >= 0 and self.board[pos_x][pos_y] ==  player:
+                counter += 1
+                pos_x -= 1
+                pos_y -= 1
+            elif counter == 4:
+                print(win_msg)
+                self.game_status = True
+                return
+            else:
+                counter = 0
+                pos_x = temp1
+                pos_y = temp2
+                break
+        # Check lower diagonal (left)
+        while True:
+            if pos_x < 6 and pos_y < 7 and self.board[pos_x][pos_y]:
+                counter += 1
+                pos_x += 1
+                pos_y += 1
+            elif counter == 4:
+                print(win_msg)
+                self.game_status = False
+                return
+            else:
+                counter = 0
+                pos_x = temp1
+                pos_y = temp2
+                break
+        
+        #Check for any empty spots if full game has ended in a tie
+        if 0 not in self.board:
+            print("Game has ended in a tie!\nNo more moves can be made.\n")
+            self.game_status = True
+
         return
     
     def player_turn(self,player):
@@ -158,6 +193,10 @@ while answer == "y":
     while game.game_status != True:
         pos_x,pos_y,player_token = game.player_turn(player.token)
         game.checkboard(pos_x,pos_y,player_token)
+        if game.game_status == True:
+            break
+        pos_x,pos_y,comp_token = game.player_turn(computer.token)
+        game.checkboard(pos_x,pos_y,comp_token)
     answer = input("Would you like to play again?\n")
     if answer == "y":
         # Reset board and status of game
@@ -167,7 +206,8 @@ while answer == "y":
         print("\n")
         continue
     else:
-        print("Thank you for playing!")
+        os.system('clear')
+        print("Thank you for playing!\n")
         exit()
     
     
