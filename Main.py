@@ -153,7 +153,7 @@ class Tic_Tac_Toe:
     def player_turn(self,player):
         try:
             while True:
-                selection = int(input("Select a column (1-7):\n"))
+                selection = int(input("\nPlayer {zero} select a column (1-7):\n".format(zero = player)))
                 if selection < 1 or selection > 7:
                     print("Selection is out of bound please try again.")
                 else:
@@ -161,7 +161,7 @@ class Tic_Tac_Toe:
         except ValueError:
             print("Invalid try again.")
             while True:
-                selection = int(input("Select a column (1-7):\n"))
+                selection = int(input("\nPlayer {zero} select a column (1-7):\n".format(zero = player)))
                 break
         x,y,user_token = self.place_chip(selection-1,player)
         print(self.board)
@@ -190,7 +190,7 @@ else:
 answer = "y"
 while answer == "y":
     #Start Game - Initial Board
-    print(game.board)
+    print("\n",game.board)
     while game.game_status != True:
         pos_x,pos_y,player_token = game.player_turn(player.token)
         game.checkboard(pos_x,pos_y,player_token)
@@ -198,7 +198,7 @@ while answer == "y":
             break
         pos_x,pos_y,comp_token = game.player_turn(computer.token)
         game.checkboard(pos_x,pos_y,comp_token)
-    answer = input("Would you like to play again?\n")
+    answer = input("\nWould you like to play again?\n")
     if answer == "y":
         # Reset board and status of game
         game.board.fill(0)
@@ -208,7 +208,7 @@ while answer == "y":
         continue
     else:
         os.system('clear')
-        print("Thank you for playing!\n")
+        print("\nThank you for playing!\n")
         exit()
     
     
