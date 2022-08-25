@@ -155,7 +155,8 @@ class Tic_Tac_Toe:
             while True:
                 selection = int(input("\nPlayer {zero} select a column (1-7):\n".format(zero = player)))
                 if selection < 1 or selection > 7:
-                    print("Selection is out of bound please try again.")
+                    print("\nSelection is out of bound please try again.\n")
+                    print(self.board)
                 else:
                     break
         except ValueError:
